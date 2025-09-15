@@ -20,10 +20,10 @@ export async function GET(req: NextRequest, context: { params: { id: string } })
     // Get profile using service
     const profile = await ProfileService.getProfile(id)
 
-    return Response.json({ data: profile })
+    return NextResponse.json({ data: profile })
   } catch (error) {
     if (error instanceof AuthenticationError) {
-      return Response.json({ error: error.message }, { status: error.statusCode })
+      return NextResponse.json({ error: error.message }, { status: error.statusCode })
     }
     
     if (error instanceof NotFoundError) {
@@ -34,7 +34,7 @@ export async function GET(req: NextRequest, context: { params: { id: string } })
       error: error instanceof Error ? error.message : 'Unknown error',
       profileId: context.params.id 
     })
-    return Response.json({ error: 'Internal server error' }, { status: 500 })
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
   }
 }
 
@@ -58,17 +58,17 @@ export async function GET(req: NextRequest, context: { params: { id: string } })
     // Update profile using service
     const profile = await ProfileService.updateProfile(id, { email })
 
-    return Response.json({ data: profile })
+    return NextResponse.json({ data: profile })
   } catch (error) {
     if (error instanceof AuthenticationError || error instanceof NotFoundError) {
-      return Response.json({ error: error.message }, { status: error.statusCode })
+      return NextResponse.json({ error: error.message }, { status: error.statusCode })
     }
     
     logger.error('Unexpected error in PUT /api/profiles/[id]', { 
       error: error instanceof Error ? error.message : 'Unknown error',
       profileId: context.params.id 
     })
-    return Response.json({ error: 'Internal server error' }, { status: 500 })
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
   }
 }
 export async function DELETE(req: NextRequest, context: { params: { id: string } }) {
@@ -86,16 +86,16 @@ export async function DELETE(req: NextRequest, context: { params: { id: string }
     // Delete profile using service
     await ProfileService.deleteProfile(id)
 
-    return Response.json({ message: 'Profile deleted successfully' })
+    return NextResponse.json({ message: 'Profile deleted successfully' })
   } catch (error) {
     if (error instanceof AuthenticationError || error instanceof NotFoundError) {
-      return Response.json({ error: error.message }, { status: error.statusCode })
+      return NextResponse.json({ error: error.message }, { status: error.statusCode })
     }
     
     logger.error('Unexpected error in DELETE /api/profiles/[id]', { 
       error: error instanceof Error ? error.message : 'Unknown error',
       profileId: context.params.id 
     })
-    return Response.json({ error: 'Internal server error' }, { status: 500 })
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
   }
 }
