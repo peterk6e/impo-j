@@ -1,5 +1,5 @@
-// src/app/api/profiles/route.ts
 import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
+import { NextResponse, type NextRequest } from "next/server";
 import { cookies } from 'next/headers'
 import { rateLimit } from '@/lib/middleware/rateLimiter'
 import { logger } from '@/lib/utils/logger'
@@ -82,13 +82,11 @@ export async function POST(request: Request) {
     return Response.json({ error: 'Internal server error' }, { status: 500 })
   }
 }
-
-// PUT /api/profiles/[id]
-export async function PUT(request: Request, { params }: { params: { id: string } }) {
+export async function PUT(req: NextRequest, context: { params: { id: string } }) {
   try {
     const supabase = createRouteHandlerClient({ cookies })
-    const body = await request.json()
-    const { id } = params
+    const body = await req.json()
+    const { id } = context.params;
     
     const { data, error } = await supabase
       .from('profiles')
