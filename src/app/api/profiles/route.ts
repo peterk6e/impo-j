@@ -52,7 +52,10 @@ export async function GET(req: NextRequest) {
     logger.error('Unexpected error in GET /api/profiles', {
       error: error instanceof Error ? error.message : 'Unknown error',
     });
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    );
   }
 }
 
@@ -60,10 +63,13 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
   try {
     // Rate limiting
-    const rateLimitResult = rateLimit({ windowMs: 15 * 60 * 1000, maxRequests: 5 })(req as any)
+    const rateLimitResult = rateLimit({
+      windowMs: 15 * 60 * 1000,
+      maxRequests: 5,
+    })(req as any);
 
     if (!rateLimitResult.success) {
-      return NextResponse.json({ error: 'Too many requests' }, { status: 429 })
+      return NextResponse.json({ error: 'Too many requests' }, { status: 429 });
     }
 
     const supabase = createRouteHandlerClient({ cookies });
@@ -107,17 +113,20 @@ export async function POST(req: NextRequest) {
     logger.error('Unexpected error in POST /api/profiles', {
       error: error instanceof Error ? error.message : 'Unknown error',
     });
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    );
   }
 }
 export async function PUT(
   req: NextRequest,
-  context: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
     const supabase = createRouteHandlerClient({ cookies });
     const body = await req.json();
-    const { id } = context.params;
+    const { id } = await context.params;
 
     const { data, error } = await supabase
       .from('profiles')
@@ -132,6 +141,9 @@ export async function PUT(
 
     return NextResponse.json({ data });
   } catch (error) {
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    );
   }
 }
