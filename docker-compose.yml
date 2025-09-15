@@ -1,0 +1,24 @@
+version: "3.9"
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      NEXT_PUBLIC_SUPABASE_URL: http://supabase:54321
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: your-anon-key
+    depends_on:
+      - supabase
+
+  supabase:
+    image: supabase/supabase:latest
+    ports:
+      - "54321:54321"
+    environment:
+      POSTGRES_PASSWORD: yourpassword

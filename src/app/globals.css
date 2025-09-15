@@ -1,26 +1,54 @@
+/* globals.css */
 @import "tailwindcss";
 
+/* ========== THEME VARIABLES ========== */
+
+/* Light mode (default) */
 :root {
-  --background: #ffffff;
+  --background: #fefefe;
   --foreground: #171717;
+  --primary: #f59e0b;   /* amber-500 */
+  --secondary: #06b6d4; /* cyan-500 */
+  --background-gradient: linear-gradient(
+    to bottom,
+    #efefef 100%,  /* warm off-white, like soft stage lights */
+    #e8e4d9,  /* pale beige-gray for calmness */
+    #dcd8cc   /* gentle gray for depth */
+  );
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* Dark mode */
+html.dark {
+  --background: #0a0f1e;
+  --foreground: #f9f9f9;
+  --primary: #facc15;   /* amber-400 */
+  --secondary: #22d3ee; /* cyan-400 */
+  --background-gradient: linear-gradient(to bottom, #0a0f1e, #102030, #0a0f1e);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+/* ========== BASE STYLES ========== */
 body {
-  background: var(--background);
+  background: var(--background-gradient);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease, background 0.5s ease;
+}
+
+/* Optional smoother transitions on root for entire app */
+html {
+  transition: background-color 0.5s ease, color 0.3s ease, background 0.5s ease;
+}
+
+/* Links inherit colors but highlight on hover */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Utility fallback (if needed for custom dark variant selectors) */
+/* @custom-variant dark (&:where(.dark, .dark *)); */
+
+.bg-custom{
+  background: var(--background);
+  opacity: 0.95;
 }
