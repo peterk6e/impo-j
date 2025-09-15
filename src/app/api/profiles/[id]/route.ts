@@ -27,7 +27,7 @@ export async function GET(req: NextRequest, context: { params: { id: string } })
     }
     
     if (error instanceof NotFoundError) {
-      return Response.json({ error: error.message }, { status: error.statusCode })
+      return NextResponse.json({ error: error.message }, { status: error.statusCode })
     }
     
     logger.error('Unexpected error in GET /api/profiles/[id]', { 
