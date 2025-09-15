@@ -5,10 +5,10 @@ import { ProfileService } from '@/lib/services/profileService'
 import { AuthenticationError, NotFoundError } from '@/lib/errors/AppError'
 import { logger } from '@/lib/utils/logger'
 
-export async function GET(req: NextRequest, context: { params: { id: string } }) {
+export async function GET(req: NextRequest, context: { params: Promise<{ id: string }> }) {
   try {
     const supabase = createRouteHandlerClient({ cookies })
-    const { id } = context.params;
+    const { id } = await context.params;
     
     // Get current session
     const { data: { session }, error: sessionError } = await supabase.auth.getSession()
@@ -30,19 +30,26 @@ export async function GET(req: NextRequest, context: { params: { id: string } })
       return NextResponse.json({ error: error.message }, { status: error.statusCode })
     }
     
+    let id: string | undefined;
+    try {
+      id = (await context.params).id;
+    } catch {
+      id = undefined;
+    }
+
     logger.error('Unexpected error in GET /api/profiles/[id]', { 
       error: error instanceof Error ? error.message : 'Unknown error',
-      profileId: context.params.id 
+      profileId: id 
     })
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
   }
 }
 
-  export async function PUT(req: NextRequest, context: { params: { id: string } }) {
+  export async function PUT(req: NextRequest, context: { params: Promise <{ id: string }> }) {
 
   try {
     const supabase = createRouteHandlerClient({ cookies })
-    const { id } = context.params;
+    const { id } = await context.params;
     
     // Get current session
     const { data: { session }, error: sessionError } = await supabase.auth.getSession()
@@ -64,17 +71,24 @@ export async function GET(req: NextRequest, context: { params: { id: string } })
       return NextResponse.json({ error: error.message }, { status: error.statusCode })
     }
     
+    let id: string | undefined;
+    try {
+      id = (await context.params).id;
+    } catch {
+      id = undefined;
+    }
+
     logger.error('Unexpected error in PUT /api/profiles/[id]', { 
       error: error instanceof Error ? error.message : 'Unknown error',
-      profileId: context.params.id 
+      profileId: id 
     })
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
   }
 }
-export async function DELETE(req: NextRequest, context: { params: { id: string } }) {
+export async function DELETE(req: NextRequest, context: { params: Promise <{ id: string }> }) {
   try {
     const supabase = createRouteHandlerClient({ cookies })
-    const { id } = context.params;
+    const { id } = await context.params;
     
     // Get current session
     const { data: { session }, error: sessionError } = await supabase.auth.getSession()
@@ -91,10 +105,17 @@ export async function DELETE(req: NextRequest, context: { params: { id: string }
     if (error instanceof AuthenticationError || error instanceof NotFoundError) {
       return NextResponse.json({ error: error.message }, { status: error.statusCode })
     }
-    
+
+    let id: string | undefined;
+    try {
+      id = (await context.params).id;
+    } catch {
+      id = undefined;
+    }
+
     logger.error('Unexpected error in DELETE /api/profiles/[id]', { 
       error: error instanceof Error ? error.message : 'Unknown error',
-      profileId: context.params.id 
+      profileId: id 
     })
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
   }
