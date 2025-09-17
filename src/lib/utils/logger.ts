@@ -1,16 +1,16 @@
 // src/lib/utils/logger.ts
 interface LogLevel {
-  ERROR: 'error';
-  WARN: 'warn';
-  INFO: 'info';
-  DEBUG: 'debug';
+  error: 'error';
+  warn: 'warn';
+  info: 'info';
+  debug: 'debug';
 }
 
 const LOG_LEVELS: LogLevel = {
-  ERROR: 'error',
-  WARN: 'warn',
-  INFO: 'info',
-  DEBUG: 'debug',
+  error: 'error',
+  warn: 'warn',
+  info: 'info',
+  debug: 'debug',
 };
 
 class Logger {
@@ -34,19 +34,19 @@ class Logger {
   }
 
   error(message: string, meta?: any) {
-    this.log('ERROR', message, meta);
+    this.log('error', message, meta);
   }
 
   warn(message: string, meta?: any) {
-    this.log('WARN', message, meta);
+    this.log('warn', message, meta);
   }
 
   info(message: string, meta?: any) {
-    this.log('INFO', message, meta);
+    this.log('info', message, meta);
   }
 
   debug(message: string, meta?: any) {
-    this.log('DEBUG', message, meta);
+    this.log('debug', message, meta);
   }
 }
 

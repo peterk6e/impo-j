@@ -1,5 +1,5 @@
 // src/app/profile/page.tsx (server component)
-import { supabaseServer } from '@/lib/supabaseServerClient'
+import { supabaseServerComponent } from '@/lib/supabase'
 import { ProfileService } from '@/lib/services/profileService'
 import { logger } from '@/lib/utils/logger'
 import { redirect } from 'next/navigation'
@@ -9,14 +9,14 @@ import ProfileSkeleton from './ProfileSkeleton'
 import ScaleApp from '../../../components/ScaleApp'
 
 export default async function ProfilePage() {
+  const supabase = supabaseServerComponent()
+
   try {
     // Get session first
-    const { data: { session }, error: sessionError } = await supabaseServer.auth.getSession()
-    
-    if (sessionError) {
-      logger.error('Session error in ProfilePage', { error: sessionError.message })
-      redirect('/login')
-    }
+    const {
+      data: { session },
+    } = await supabase.auth.getSession()     
+
     
     if (!session) {
       redirect('/login')

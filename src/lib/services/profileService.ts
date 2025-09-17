@@ -1,7 +1,6 @@
-// src/lib/services/profileService.ts
-import { supabaseServer } from '@/lib/supabaseServerClient'
+import { supabaseServerComponent } from '../supabase'
 import { logger } from '@/lib/utils/logger'
-import { Profile, CreateProfile, UpdateProfile } from '@/lib/validation/schemas'
+import { Profile, UpdateProfile } from '@/lib/validation/schemas'
 import { NotFoundError, ConflictError } from '@/lib/errors/AppError'
 
 export class ProfileService {
@@ -9,8 +8,9 @@ export class ProfileService {
    * Get profile by user ID
    */
   static async getProfile(userId: string): Promise<Profile> {
+    const supabase = supabaseServerComponent()
     try {
-      const { data: profile, error } = await supabaseServer
+      const { data: profile, error } = await supabase
         .from('profiles')
         .select('*')
         .eq('id', userId)
@@ -23,9 +23,12 @@ export class ProfileService {
         throw new Error(`Database error: ${error.message}`)
       }
 
-      return profile
+      return profile as Profile
     } catch (error) {
-      logger.error('Failed to get profile', { userId, error: error instanceof Error ? error.message : 'Unknown error' })
+      logger.error('Failed to get profile', {
+        userId,
+        error: error instanceof Error ? error.message : 'Unknown error',
+      })
       throw error
     }
   }
@@ -34,6 +37,7 @@ export class ProfileService {
    * Create profile for user
    */
   static async createProfile(userId: string, email: string): Promise<Profile> {
+    const supabase = supabaseServerComponent()
     try {
       // Check if profile already exists
       const existingProfile = await this.getProfile(userId).catch(() => null)
@@ -41,7 +45,7 @@ export class ProfileService {
         throw new ConflictError('Profile already exists')
       }
 
-      const { data: profile, error } = await supabaseServer
+      const { data: profile, error } = await supabase
         .from('profiles')
         .insert({
           id: userId,
@@ -56,9 +60,12 @@ export class ProfileService {
       }
 
       logger.info('Profile created successfully', { userId })
-      return profile
+      return profile as Profile
     } catch (error) {
-      logger.error('Failed to create profile', { userId, error: error instanceof Error ? error.message : 'Unknown error' })
+      logger.error('Failed to create profile', {
+        userId,
+        error: error instanceof Error ? error.message : 'Unknown error',
+      })
       throw error
     }
   }
@@ -67,8 +74,9 @@ export class ProfileService {
    * Update profile
    */
   static async updateProfile(userId: string, updates: UpdateProfile): Promise<Profile> {
+    const supabase = supabaseServerComponent()
     try {
-      const { data: profile, error } = await supabaseServer
+      const { data: profile, error } = await supabase
         .from('profiles')
         .update(updates)
         .eq('id', userId)
@@ -83,9 +91,12 @@ export class ProfileService {
       }
 
       logger.info('Profile updated successfully', { userId })
-      return profile
+      return profile as Profile
     } catch (error) {
-      logger.error('Failed to update profile', { userId, error: error instanceof Error ? error.message : 'Unknown error' })
+      logger.error('Failed to update profile', {
+        userId,
+        error: error instanceof Error ? error.message : 'Unknown error',
+      })
       throw error
     }
   }
@@ -94,11 +105,9 @@ export class ProfileService {
    * Delete profile
    */
   static async deleteProfile(userId: string): Promise<void> {
+    const supabase = supabaseServerComponent()
     try {
-      const { error } = await supabaseServer
-        .from('profiles')
-        .delete()
-        .eq('id', userId)
+      const { error } = await supabase.from('profiles').delete().eq('id', userId)
 
       if (error) {
         throw new Error(`Database error: ${error.message}`)
@@ -106,7 +115,10 @@ export class ProfileService {
 
       logger.info('Profile deleted successfully', { userId })
     } catch (error) {
-      logger.error('Failed to delete profile', { userId, error: error instanceof Error ? error.message : 'Unknown error' })
+      logger.error('Failed to delete profile', {
+        userId,
+        error: error instanceof Error ? error.message : 'Unknown error',
+      })
       throw error
     }
   }

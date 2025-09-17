@@ -42,7 +42,7 @@ describe('Profile Actions', () => {
   describe('updateProfileAction', () => {
     it('should update profile successfully', async () => {
       const { ProfileService } = await import('@/lib/services/profileService')
-      const { supabaseServer } = await import('@/lib/supabaseServerClient')
+      const { supabaseServer } = await import('@/lib/supabase')
       
       // Mock session
       vi.mocked(supabaseServer.auth.getSession).mockResolvedValue({
@@ -69,7 +69,7 @@ describe('Profile Actions', () => {
     })
 
     it('should handle validation errors', async () => {
-      const { supabaseServer } = await import('@/lib/supabaseServerClient')
+      const { supabaseServer } = await import('@/lib/supabase')
       
       // Mock session
       vi.mocked(supabaseServer.auth.getSession).mockResolvedValue({
@@ -88,7 +88,7 @@ describe('Profile Actions', () => {
     })
 
     it('should handle authentication errors', async () => {
-      const { supabaseServer } = await import('@/lib/supabaseServerClient')
+      const { supabaseServer } = await import('@/lib/supabase')
       
       // Mock no session
       vi.mocked(supabaseServer.auth.getSession).mockResolvedValue({
@@ -110,7 +110,7 @@ describe('Profile Actions', () => {
   describe('createProfileAction', () => {
     it('should create profile successfully', async () => {
       const { ProfileService } = await import('@/lib/services/profileService')
-      const { supabaseServer } = await import('@/lib/supabaseServerClient')
+      const { supabaseServer } = await import('@/lib/supabase')
       
       // Mock session
       vi.mocked(supabaseServer.auth.getSession).mockResolvedValue({
@@ -139,7 +139,7 @@ describe('Profile Actions', () => {
   describe('deleteProfileAction', () => {
     it('should delete profile successfully', async () => {
       const { ProfileService } = await import('@/lib/services/profileService')
-      const { supabaseServer } = await import('@/lib/supabaseServerClient')
+      const { supabaseServer } = await import('@/lib/supabase')
       const { redirect } = await import('next/navigation')
       
       // Mock session
@@ -161,7 +161,7 @@ describe('Profile Actions', () => {
     })
 
     it('should prevent users from deleting other profiles', async () => {
-      const { supabaseServer } = await import('@/lib/supabaseServerClient')
+      const { supabaseServer } = await import('@/lib/supabase')
       
       // Mock session with different user
       vi.mocked(supabaseServer.auth.getSession).mockResolvedValue({
