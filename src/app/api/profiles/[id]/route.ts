@@ -1,5 +1,5 @@
 import { NextResponse, type NextRequest } from "next/server";
-import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
+import { createClient } from "@/lib/supabase";
 import { cookies } from 'next/headers'
 import { ProfileService } from '@/lib/services/profileService'
 import { AuthenticationError, NotFoundError } from '@/lib/errors/AppError'
@@ -7,7 +7,7 @@ import { logger } from '@/lib/utils/logger'
 
 export async function GET(req: NextRequest, context: { params: Promise<{ id: string }> }) {
   try {
-    const supabase = createRouteHandlerClient({ cookies })
+    const supabase = await createClient()
     const { id } = await context.params;
     
     // Get current session
@@ -48,7 +48,7 @@ export async function GET(req: NextRequest, context: { params: Promise<{ id: str
   export async function PUT(req: NextRequest, context: { params: Promise <{ id: string }> }) {
 
   try {
-    const supabase = createRouteHandlerClient({ cookies })
+    const supabase = await createClient()
     const { id } = await context.params;
     
     // Get current session
@@ -85,9 +85,10 @@ export async function GET(req: NextRequest, context: { params: Promise<{ id: str
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
   }
 }
+
 export async function DELETE(req: NextRequest, context: { params: Promise <{ id: string }> }) {
   try {
-    const supabase = createRouteHandlerClient({ cookies })
+    const supabase = await createClient()
     const { id } = await context.params;
     
     // Get current session
