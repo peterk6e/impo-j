@@ -10,7 +10,12 @@ const rateLimitStore = new Map<string, { count: number; resetTime: number }>();
 
 export function rateLimit(config: RateLimitConfig) {
   return (req: NextRequest) => {
-    const ip = req.ip || req.headers.get('x-forwarded-for') || 'unknown';
+    // Get IP from headers (typical in Vercel/Next.js deployments)
+    const ip =
+      req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+      req.headers.get("x-real-ip") ||
+      "unknown";
+
     const now = Date.now();
     const windowMs = config.windowMs;
     const maxRequests = config.maxRequests;
