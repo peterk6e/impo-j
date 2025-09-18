@@ -1,10 +1,10 @@
 'use client'
 import { useState, useEffect, useTransition } from 'react'
-import { supabase } from '../../../lib/supabaseClient'
+import { createClient } from '@/lib/supabaseClient'
 import { Session } from '@supabase/supabase-js'
 import { useProfile, useCreateProfile } from '@/lib/hooks/useProfile'
 import { Profile } from '@/lib/validation/schemas'
-import { updateProfileAction, createProfileAction, deleteProfileAction } from '@/lib/actions/profileActions'
+import { updateProfileAction, createProfileAction } from '@/lib/actions/profileActions'
 import { Button } from '@/components/ui/Button'
 
 interface ProfileClientProps {
@@ -21,6 +21,7 @@ export default function ProfileClient({
   const [email, setEmail] = useState('')
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null)
   const [isPending, startTransition] = useTransition()
+  
 
   // React Query hooks
   const { 
@@ -36,6 +37,9 @@ export default function ProfileClient({
   const createProfile = useCreateProfile()
 
   useEffect(() => {
+    const supabase = createClient()
+
+
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session)
     })
@@ -87,27 +91,6 @@ export default function ProfileClient({
         text: 'Failed to create profile. Please try again.' 
       })
     }
-  }
-
-  const handleDeleteProfile = async () => {
-    if (!session?.user.id) return
-    
-    if (!confirm('Are you sure you want to delete your profile? This action cannot be undone.')) {
-      return
-    }
-    
-    startTransition(async () => {
-      try {
-        const formData = new FormData()
-        formData.append('userId', session.user.id)
-        await deleteProfileAction(formData)
-      } catch (error) {
-        setMessage({ 
-          type: 'error', 
-          text: 'Failed to delete profile. Please try again.' 
-        })
-      }
-    })
   }
 
   // Clear message after 5 seconds
@@ -236,7 +219,7 @@ export default function ProfileClient({
           <div className="pt-4 border-t border-gray-200">
             <h3 className="text-sm font-medium text-red-600 mb-2">Danger Zone</h3>
             <Button
-              onClick={handleDeleteProfile}
+              onClick={() => alert('contact admin')}
               disabled={isPending}
               className="bg-red-600 hover:bg-red-700 text-white"
               size="sm"

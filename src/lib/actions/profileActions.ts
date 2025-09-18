@@ -10,14 +10,15 @@ import {
   AuthenticationError,
   NotFoundError,
 } from '@/lib/errors/AppError'
-import { supabaseServerComponent } from '@/lib/supabase'
+import { createClient } from '@/lib/supabase'
+
 
 /**
  * Update profile action
  */
 export async function updateProfileAction(formData: FormData) {
   try {
-    const supabase = supabaseServerComponent()
+    const supabase = await createClient()
 
     const {
       data: { session },
@@ -83,7 +84,7 @@ export async function updateProfileAction(formData: FormData) {
  */
 export async function createProfileAction(formData: FormData) {
   try {
-    const supabase = supabaseServerComponent()
+    const supabase = await createClient()
 
     const {
       data: { session },
@@ -113,6 +114,7 @@ export async function createProfileAction(formData: FormData) {
       email: newProfile.email,
     })
 
+    // Revalidate the profile page after creation
     revalidatePath('/profile')
 
     return {
@@ -127,61 +129,6 @@ export async function createProfileAction(formData: FormData) {
     })
 
     if (error instanceof ValidationError || error instanceof AuthenticationError) {
-      return {
-        success: false,
-        error: error.message,
-      }
-    }
-
-    return {
-      success: false,
-      error: 'An unexpected error occurred. Please try again.',
-    }
-  }
-}
-
-/**
- * Delete profile action
- */
-export async function deleteProfileAction(formData: FormData) {
-  try {
-    const supabase = supabaseServerComponent()
-
-    const {
-      data: { session },
-      error: sessionError,
-    } = await supabase.auth.getSession()
-
-    if (sessionError || !session) {
-      throw new AuthenticationError('You must be logged in to delete your profile')
-    }
-
-    const userId = formData.get('userId') as string
-
-    if (!userId) {
-      throw new ValidationError('User ID is required')
-    }
-
-    if (userId !== session.user.id) {
-      throw new AuthenticationError('You can only delete your own profile')
-    }
-
-    await ProfileService.deleteProfile(userId)
-
-    logger.info('Profile deleted successfully', { userId })
-
-    redirect('/')
-  } catch (error) {
-    logger.error('Failed to delete profile', {
-      error: error instanceof Error ? error.message : 'Unknown error',
-      formData: Object.fromEntries(formData.entries()),
-    })
-
-    if (
-      error instanceof ValidationError ||
-      error instanceof AuthenticationError ||
-      error instanceof NotFoundError
-    ) {
       return {
         success: false,
         error: error.message,

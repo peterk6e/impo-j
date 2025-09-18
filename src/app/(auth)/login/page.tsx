@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { supabase } from '@/lib/supabaseClient'
+import { createClient } from '@/lib/supabaseClient'
 import { useRouter } from 'next/navigation'
 import * as AlertDialog from '@radix-ui/react-alert-dialog'
 import { CheckCircleIcon, XCircleIcon } from '@heroicons/react/24/outline'
@@ -13,7 +13,9 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false)
   const router = useRouter()
 
+  
   const handleLogin = async () => {
+    const supabase = createClient()
     setLoading(true)
     setStatus('idle')
     const { error } = await supabase.auth.signInWithOtp({ email,  options: {
@@ -33,10 +35,11 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
-      <div className="w-full max-w-md rounded-xl shadow-lg p-8 flex flex-col gap-6">
+      <div className="w-full max-w-md rounded-xl shadow-lg bg-custom p-8 flex flex-col gap-6">
         <h1 className="text-3xl font-bold text-center">Login</h1>
 
         <input
+          autoFocus={true}
           type="email"
           placeholder="Your email"
           value={email}

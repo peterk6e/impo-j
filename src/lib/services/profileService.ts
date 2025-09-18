@@ -1,4 +1,4 @@
-import { supabaseServerComponent } from '../supabase'
+import { createClient } from '../supabase'
 import { logger } from '@/lib/utils/logger'
 import { Profile, UpdateProfile } from '@/lib/validation/schemas'
 import { NotFoundError, ConflictError } from '@/lib/errors/AppError'
@@ -8,7 +8,7 @@ export class ProfileService {
    * Get profile by user ID
    */
   static async getProfile(userId: string): Promise<Profile> {
-    const supabase = supabaseServerComponent()
+    const supabase = await createClient()
     try {
       const { data: profile, error } = await supabase
         .from('profiles')
@@ -37,7 +37,7 @@ export class ProfileService {
    * Create profile for user
    */
   static async createProfile(userId: string, email: string): Promise<Profile> {
-    const supabase = supabaseServerComponent()
+    const supabase = await createClient()
     try {
       // Check if profile already exists
       const existingProfile = await this.getProfile(userId).catch(() => null)
@@ -74,7 +74,7 @@ export class ProfileService {
    * Update profile
    */
   static async updateProfile(userId: string, updates: UpdateProfile): Promise<Profile> {
-    const supabase = supabaseServerComponent()
+    const supabase = await createClient()
     try {
       const { data: profile, error } = await supabase
         .from('profiles')
@@ -105,7 +105,7 @@ export class ProfileService {
    * Delete profile
    */
   static async deleteProfile(userId: string): Promise<void> {
-    const supabase = supabaseServerComponent()
+    const supabase = await createClient()
     try {
       const { error } = await supabase.from('profiles').delete().eq('id', userId)
 
