@@ -5,10 +5,10 @@ import { ProfileService } from '@/lib/services/profileService'
 import { AuthenticationError, NotFoundError } from '@/lib/errors/AppError'
 import { logger } from '@/lib/utils/logger'
 
-export async function GET(req: NextRequest, context: { params: Promise<{ id: string }> }) {
+export async function GET(req: NextRequest, context: { params: { id: string } }) {
   try {
     const supabase = await createClient()
-    const { id } = await context.params;
+    const { id } = context.params;
     
     // Get current session
     const { data: { session }, error: sessionError } = await supabase.auth.getSession()
@@ -45,11 +45,11 @@ export async function GET(req: NextRequest, context: { params: Promise<{ id: str
   }
 }
 
-  export async function PUT(req: NextRequest, context: { params: Promise <{ id: string }> }) {
+export async function PUT(req: NextRequest, context: { params: { id: string } }) {
 
   try {
     const supabase = await createClient()
-    const { id } = await context.params;
+    const { id } = context.params;
     
     // Get current session
     const { data: { session }, error: sessionError } = await supabase.auth.getSession()
@@ -86,10 +86,10 @@ export async function GET(req: NextRequest, context: { params: Promise<{ id: str
   }
 }
 
-export async function DELETE(req: NextRequest, context: { params: Promise <{ id: string }> }) {
+export async function DELETE(req: NextRequest, context: { params: { id: string } }) {
   try {
     const supabase = await createClient()
-    const { id } = await context.params;
+    const { id } = context.params;
     
     // Get current session
     const { data: { session }, error: sessionError } = await supabase.auth.getSession()
