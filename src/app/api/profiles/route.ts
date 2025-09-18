@@ -119,31 +119,3 @@ export async function POST(req: NextRequest) {
     );
   }
 }
-export async function PUT(
-  req: NextRequest,
-  context: { params: { id: string } }
-) {
-  try {
-    const supabase = await createClient();
-    const body = await req.json();
-    const { id } =  context.params;
-
-    const { data, error } = await supabase
-      .from('profiles')
-      .update(body)
-      .eq('id', id)
-      .select()
-      .single();
-
-    if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
-    }
-
-    return NextResponse.json({ data });
-  } catch (error) {
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
-  }
-}
