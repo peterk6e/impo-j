@@ -121,12 +121,12 @@ export async function POST(req: NextRequest) {
 }
 export async function PUT(
   req: NextRequest,
-  context: { params: Promise<{ id: string }> }
+  context: { params: { id: string } }
 ) {
   try {
     const supabase = await createClient();
     const body = await req.json();
-    const { id } = await context.params;
+    const { id } =  context.params;
 
     const { data, error } = await supabase
       .from('profiles')
