@@ -1,9 +1,9 @@
 // src/test/setup.ts
-import { beforeAll, afterEach, afterAll } from 'vitest';
+import { afterEach } from 'vitest';
 import { cleanup } from '@testing-library/react';
-import '@testing-library/jest-dom';
+import '@testing-library/jest-dom/vitest';  // 👈 use vitest version
 
-// Cleanup after each test
+// Runs cleanup after each test case
 afterEach(() => {
   cleanup();
 });
