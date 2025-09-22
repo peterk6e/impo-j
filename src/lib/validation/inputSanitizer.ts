@@ -56,14 +56,15 @@ export function sanitizeUrl(input: string): string {
 /**
  * Sanitize object with string values
  */
-export function sanitizeObject<T extends Record<string, any>>(obj: T): T {
-  const sanitized = { ...obj }
+export function sanitizeObject<T extends Record<string, unknown>>(obj: T): T {
+  const sanitized: Record<string, unknown> = { ...obj };
   
   for (const key in sanitized) {
-    if (typeof sanitized[key] === 'string') {
-      sanitized[key] = sanitizeText(sanitized[key])
+    const value = sanitized[key];
+    if (typeof value === 'string') {
+      sanitized[key] = sanitizeText(value);
     }
   }
-  
-  return sanitized
+
+  return sanitized as T;
 }
