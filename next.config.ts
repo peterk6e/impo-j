@@ -1,4 +1,4 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
   // Security headers
@@ -27,17 +27,17 @@ const nextConfig: NextConfig = {
       },
     ];
   },
-  
+
   // Environment variables validation
   env: {
     CUSTOM_KEY: process.env.CUSTOM_KEY,
   },
-  
+
   // Performance optimizations
   experimental: {
     optimizePackageImports: ['@supabase/supabase-js'],
   },
-  
+
   // Image optimization
   images: {
     domains: ['localhost'],

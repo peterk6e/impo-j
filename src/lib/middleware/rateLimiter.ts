@@ -12,9 +12,9 @@ export function rateLimit(config: RateLimitConfig) {
   return (req: NextRequest) => {
     // Get IP from headers (typical in Vercel/Next.js deployments)
     const ip =
-      req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
-      req.headers.get("x-real-ip") ||
-      "unknown";
+      req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
+      req.headers.get('x-real-ip') ||
+      'unknown';
 
     const now = Date.now();
     const windowMs = config.windowMs;

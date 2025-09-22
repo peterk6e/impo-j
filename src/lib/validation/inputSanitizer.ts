@@ -1,5 +1,5 @@
 // src/lib/validation/inputSanitizer.ts
-import DOMPurify from 'isomorphic-dompurify'
+import DOMPurify from 'isomorphic-dompurify';
 
 /**
  * Sanitize HTML content to prevent XSS attacks
@@ -7,14 +7,14 @@ import DOMPurify from 'isomorphic-dompurify'
 export function sanitizeHtml(input: string): string {
   if (typeof window === 'undefined') {
     // Server-side sanitization
-    const { JSDOM } = require('jsdom')
-    const window = new JSDOM('').window
-    const DOMPurify = require('isomorphic-dompurify')
-    return DOMPurify.sanitize(input, { window })
+    const { JSDOM } = require('jsdom');
+    const window = new JSDOM('').window;
+    const DOMPurify = require('isomorphic-dompurify');
+    return DOMPurify.sanitize(input, { window });
   }
-  
+
   // Client-side sanitization
-  return DOMPurify.sanitize(input)
+  return DOMPurify.sanitize(input);
 }
 
 /**
@@ -24,7 +24,7 @@ export function sanitizeText(input: string): string {
   return input
     .replace(/<[^>]*>/g, '') // Remove HTML tags
     .replace(/[<>'"&]/g, '') // Remove dangerous characters
-    .trim()
+    .trim();
 }
 
 /**
@@ -34,7 +34,7 @@ export function sanitizeEmail(input: string): string {
   return input
     .toLowerCase()
     .trim()
-    .replace(/[^a-zA-Z0-9@._-]/g, '') // Keep only valid email characters
+    .replace(/[^a-zA-Z0-9@._-]/g, ''); // Keep only valid email characters
 }
 
 /**
@@ -42,14 +42,14 @@ export function sanitizeEmail(input: string): string {
  */
 export function sanitizeUrl(input: string): string {
   try {
-    const url = new URL(input)
+    const url = new URL(input);
     // Only allow http and https protocols
     if (url.protocol === 'http:' || url.protocol === 'https:') {
-      return url.toString()
+      return url.toString();
     }
-    throw new Error('Invalid protocol')
+    throw new Error('Invalid protocol');
   } catch {
-    return ''
+    return '';
   }
 }
 
@@ -58,7 +58,7 @@ export function sanitizeUrl(input: string): string {
  */
 export function sanitizeObject<T extends Record<string, unknown>>(obj: T): T {
   const sanitized: Record<string, unknown> = { ...obj };
-  
+
   for (const key in sanitized) {
     const value = sanitized[key];
     if (typeof value === 'string') {

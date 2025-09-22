@@ -1,121 +1,125 @@
-'use client'
-import { useState, useEffect, useTransition } from 'react'
-import { createClient } from '@/lib/supabaseClient'
-import { Session } from '@supabase/supabase-js'
-import { useProfile, useCreateProfile } from '@/lib/hooks/useProfile'
-import { Profile } from '@/lib/validation/schemas'
-import { updateProfileAction, createProfileAction } from '@/lib/actions/profileActions'
-import { Button } from '@/components/ui/Button'
+'use client';
+import { useState, useEffect, useTransition } from 'react';
+import { createClient } from '@/lib/supabaseClient';
+import { Session } from '@supabase/supabase-js';
+import { useProfile, useCreateProfile } from '@/lib/hooks/useProfile';
+import { Profile } from '@/lib/validation/schemas';
+import { updateProfileAction, createProfileAction } from '@/lib/actions/profileActions';
+import { Button } from '@/components/ui/Button';
 
 interface ProfileClientProps {
-  initialSession: Session | null
-  initialProfile?: Profile | null
+  initialSession: Session | null;
+  initialProfile?: Profile | null;
 }
 
-export default function ProfileClient({ 
-  initialSession, 
-  initialProfile 
-}: ProfileClientProps) {
-  const [session, setSession] = useState<Session | null>(initialSession)
-  const [isEditing, setIsEditing] = useState(false)
-  const [email, setEmail] = useState('')
-  const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null)
-  const [isPending, startTransition] = useTransition()
-  
+export default function ProfileClient({ initialSession, initialProfile }: ProfileClientProps) {
+  const [session, setSession] = useState<Session | null>(initialSession);
+  const [isEditing, setIsEditing] = useState(false);
+  const [email, setEmail] = useState('');
+  const [message, setMessage] = useState<{
+    type: 'success' | 'error';
+    text: string;
+  } | null>(null);
+  const [isPending, startTransition] = useTransition();
 
   // React Query hooks
-  const { 
-    data: profile, 
-    isLoading, 
-    error, 
-    refetch 
+  const {
+    data: profile,
+    isLoading,
+    error,
+    refetch,
   } = useProfile(session?.user.id || '', {
     initialData: initialProfile,
-    enabled: !!session?.user.id
-  })
-  
-  const createProfile = useCreateProfile()
+    enabled: !!session?.user.id,
+  });
+
+  const createProfile = useCreateProfile();
 
   useEffect(() => {
-    const supabase = createClient()
+    const supabase = createClient();
 
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session)
-    })
-    return () => subscription.unsubscribe()
-  }, [])
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+    });
+    return () => subscription.unsubscribe();
+  }, []);
 
   useEffect(() => {
     if (profile) {
-      setEmail(profile.email)
+      setEmail(profile.email);
     }
-  }, [profile])
+  }, [profile]);
 
   const handleUpdateProfile = async (formData: FormData) => {
-    if (!session?.user.id) return
-    
+    if (!session?.user.id) {
+      return;
+    }
+
     startTransition(async () => {
       try {
-        formData.append('userId', session.user.id)
-        const result = await updateProfileAction(formData)
-        
+        formData.append('userId', session.user.id);
+        const result = await updateProfileAction(formData);
+
         if (result.success) {
-          setMessage({ type: 'success', text: result.message || ''  })
-          setIsEditing(false)
-          refetch() // Refetch to get latest data
+          setMessage({ type: 'success', text: result.message || '' });
+          setIsEditing(false);
+          refetch(); // Refetch to get latest data
         } else {
-          setMessage({ type: 'error', text: result.error || '' })
+          setMessage({ type: 'error', text: result.error || '' });
         }
       } catch (error) {
-        setMessage({ 
-          type: 'error', 
-          text: 'An unexpected error occurred. Please try again.' 
-        })
+        setMessage({
+          type: 'error',
+          text: 'An unexpected error occurred. Please try again.',
+        });
       }
-    })
-  }
+    });
+  };
 
   const handleCreateProfile = async () => {
-    if (!session?.user.id || !session.user.email) return
-    
+    if (!session?.user.id || !session.user.email) {
+      return;
+    }
+
     try {
       await createProfile.mutateAsync({
         userId: session.user.id,
-        email: session.user.email
-      })
-      setMessage({ type: 'success', text: 'Profile created successfully' })
+        email: session.user.email,
+      });
+      setMessage({ type: 'success', text: 'Profile created successfully' });
     } catch (error) {
-      setMessage({ 
-        type: 'error', 
-        text: 'Failed to create profile. Please try again.' 
-      })
+      setMessage({
+        type: 'error',
+        text: 'Failed to create profile. Please try again.',
+      });
     }
-  }
+  };
 
   // Clear message after 5 seconds
   useEffect(() => {
     if (message) {
-      const timer = setTimeout(() => setMessage(null), 5000)
-      return () => clearTimeout(timer)
+      const timer = setTimeout(() => setMessage(null), 5000);
+      return () => clearTimeout(timer);
     }
-  }, [message])
+  }, [message]);
 
   if (!session) {
     return (
       <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-lg text-center">
         <p className="text-gray-600">Please login first.</p>
       </div>
-    )
+    );
   }
-  
+
   if (isLoading) {
     return (
       <div className="flex items-center justify-center p-8">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
         <span className="ml-2">Loading profile...</span>
       </div>
-    )
+    );
   }
 
   if (error) {
@@ -123,7 +127,7 @@ export default function ProfileClient({
       <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-lg">
         <div className="bg-red-50 border border-red-200 rounded-md p-4">
           <p className="text-red-800 mb-4">Error loading profile: {error.message}</p>
-          <Button 
+          <Button
             onClick={handleCreateProfile}
             disabled={createProfile.isPending}
             className="w-full"
@@ -132,32 +136,34 @@ export default function ProfileClient({
           </Button>
         </div>
       </div>
-    )
+    );
   }
-  
+
   return (
     <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-lg">
       {/* Message display */}
       {message && (
-        <div className={`mb-4 p-3 rounded-md ${
-          message.type === 'success' 
-            ? 'bg-green-50 border border-green-200 text-green-800' 
-            : 'bg-red-50 border border-red-200 text-red-800'
-        }`}>
+        <div
+          className={`mb-4 p-3 rounded-md ${
+            message.type === 'success'
+              ? 'bg-green-50 border border-green-200 text-green-800'
+              : 'bg-red-50 border border-red-200 text-red-800'
+          }`}
+        >
           {message.text}
         </div>
       )}
 
       <h1 className="text-2xl font-bold mb-4">Profile</h1>
       <p className="text-gray-600 mb-4">Welcome! Your email: {session.user.email}</p>
-      
+
       {profile && (
         <div className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700">Profile ID</label>
             <p className="text-sm text-gray-900 font-mono">{profile.id}</p>
           </div>
-          
+
           <div>
             <label className="block text-sm font-medium text-gray-700">Email</label>
             {isEditing ? (
@@ -171,11 +177,7 @@ export default function ProfileClient({
                   required
                 />
                 <div className="flex gap-2">
-                  <Button
-                    type="submit"
-                    disabled={isPending}
-                    className="flex-1"
-                  >
+                  <Button type="submit" disabled={isPending} className="flex-1">
                     {isPending ? 'Saving...' : 'Save'}
                   </Button>
                   <Button
@@ -191,17 +193,13 @@ export default function ProfileClient({
             ) : (
               <div className="flex justify-between items-center">
                 <p className="text-sm text-gray-900">{profile.email}</p>
-                <Button
-                  onClick={() => setIsEditing(true)}
-                  variant="ghost"
-                  size="sm"
-                >
+                <Button onClick={() => setIsEditing(true)} variant="ghost" size="sm">
                   Edit
                 </Button>
               </div>
             )}
           </div>
-          
+
           <div>
             <label className="block text-sm font-medium text-gray-700">Created</label>
             <p className="text-sm text-gray-900">
@@ -210,7 +208,7 @@ export default function ProfileClient({
                 month: 'long',
                 day: 'numeric',
                 hour: '2-digit',
-                minute: '2-digit'
+                minute: '2-digit',
               })}
             </p>
           </div>
@@ -230,5 +228,5 @@ export default function ProfileClient({
         </div>
       )}
     </div>
-  )
+  );
 }

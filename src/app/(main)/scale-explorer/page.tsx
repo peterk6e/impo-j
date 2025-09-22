@@ -1,4 +1,4 @@
-import ScaleApp from "@/components/ScaleApp"
+import ScaleApp from '@/components/ScaleApp';
 
 export default function ScaleExplorerPage() {
   return (
@@ -7,5 +7,5 @@ export default function ScaleExplorerPage() {
         <ScaleApp />
       </div>
     </div>
-  )
+  );
 }

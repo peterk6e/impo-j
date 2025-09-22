@@ -15,19 +15,38 @@ interface AlbumExplorerProps {
   defaultAlbums: Album[];
 }
 
-async function fetchAlbums({ artist, decade, style }: { artist?: string; decade?: string; style?: string }) {
+async function fetchAlbums({
+  artist,
+  decade,
+  style,
+}: {
+  artist?: string;
+  decade?: string;
+  style?: string;
+}) {
   const queryParts = ['tag:jazz'];
-  if (style) queryParts.push(`tag:${style}`);
-  if (artist) queryParts.push(`artist:${artist}`);
-  if (decade) queryParts.push(`date:${decade}-01-01 TO ${decade}-12-31`);
+  if (style) {
+    queryParts.push(`tag:${style}`);
+  }
+  if (artist) {
+    queryParts.push(`artist:${artist}`);
+  }
+  if (decade) {
+    queryParts.push(`date:${decade}-01-01 TO ${decade}-12-31`);
+  }
 
   const query = encodeURIComponent(queryParts.join(' AND '));
 
-  const res = await fetch(`https://musicbrainz.org/ws/2/release-group?query=${query}&fmt=json&limit=20`, {
-    headers: { 'User-Agent': 'JazzExplorer/1.0.0 (you@example.com)' },
-  });
+  const res = await fetch(
+    `https://musicbrainz.org/ws/2/release-group?query=${query}&fmt=json&limit=20`,
+    {
+      headers: { 'User-Agent': 'JazzExplorer/1.0.0 (you@example.com)' },
+    },
+  );
 
-  if (!res.ok) throw new Error('Failed to fetch albums');
+  if (!res.ok) {
+    throw new Error('Failed to fetch albums');
+  }
   const data = await res.json();
   return data['release-groups'] as Album[];
 }
@@ -42,7 +61,6 @@ export default function AlbumExplorer({ defaultAlbums }: AlbumExplorerProps) {
     queryFn: () => fetchAlbums({ artist, decade, style }),
     initialData: defaultAlbums,
   });
-  
 
   return (
     <div className="p-6 max-w-5xl mx-auto space-y-6">

@@ -71,40 +71,24 @@ const CHORD_QUALITIES: Record<string, ChordQualitiesByLevel & { extensions?: str
     seventh: ['maj7', 'm7', 'm7', 'maj7', '7', 'm7', 'm7b5'],
     augmented: ['maj9', 'm9', 'm9', 'maj11', '9', 'm9', 'm7b5'],
     extensions: [
-      ['9', '13'],     // I
+      ['9', '13'], // I
       ['9', '11', '13'], // ii — possible en jazz
-      ['9', '11'],     // iii
-      ['9', '13'],     // IV
-      ['9', '13'],     // V
-      ['9', '11'],     // vi
-      ['11', 'b13']    // vii° (le b13 peut sonner très tendu)
-    ]
+      ['9', '11'], // iii
+      ['9', '13'], // IV
+      ['9', '13'], // V
+      ['9', '11'], // vi
+      ['11', 'b13'], // vii° (le b13 peut sonner très tendu)
+    ],
   },
   dorian: {
     seventh: ['m7', 'm7', 'maj7', '7', 'm7', 'm7b5', 'maj7'],
     augmented: ['m9', 'm9', 'maj9', '11', 'm9', 'm7b5', 'maj9'],
-    extensions: [
-      ['9', '11', '13'],
-      ['9', '11', '13'],
-      ['9'],
-      ['9', '13'],
-      ['11'],
-      ['11'],
-      ['13']
-    ]
+    extensions: [['9', '11', '13'], ['9', '11', '13'], ['9'], ['9', '13'], ['11'], ['11'], ['13']],
   },
   phrygian: {
     seventh: ['m7', 'maj7', '7', 'm7', 'm7b5', 'maj7', 'm7'],
     augmented: ['m9', 'maj9', '9', '11', 'm7b5', 'maj9', 'm9'],
-    extensions: [
-      ['9', '11'],
-      ['9'],
-      ['9', '13'],
-      ['11'],
-      ['11'],
-      ['9'],
-      ['9', '11']
-    ]
+    extensions: [['9', '11'], ['9'], ['9', '13'], ['11'], ['11'], ['9'], ['9', '11']],
   },
   lydian: {
     seventh: ['maj7', '7', 'm7', 'm7b5', 'maj7', 'm7', 'm7'],
@@ -116,47 +100,23 @@ const CHORD_QUALITIES: Record<string, ChordQualitiesByLevel & { extensions?: str
       ['11'],
       ['9', '#11'],
       ['9', '11'],
-      ['9', '11']
-    ]
+      ['9', '11'],
+    ],
   },
   mixolydian: {
     seventh: ['7', 'm7', 'm7b5', 'maj7', 'm7', 'm7', 'maj7'],
     augmented: ['9', 'm9', 'm7b5', 'maj9', 'm9', 'm9', 'maj11'],
-    extensions: [
-      ['9', '13'],
-      ['9', '11'],
-      ['11'],
-      ['9', '13'],
-      ['11'],
-      ['9'],
-      ['13']
-    ]
+    extensions: [['9', '13'], ['9', '11'], ['11'], ['9', '13'], ['11'], ['9'], ['13']],
   },
   'aeolian (natural minor)': {
     seventh: ['m7', 'm7b5', 'maj7', 'm7', 'm7', 'maj7', '7'],
     augmented: ['m9', 'm7b5', 'maj9', '11', 'm9', 'maj9', '9'],
-    extensions: [
-      ['9', '11'],
-      ['11'],
-      ['9'],
-      ['9', '11'],
-      ['9'],
-      ['9', '13'],
-      ['9', '13']
-    ]
+    extensions: [['9', '11'], ['11'], ['9'], ['9', '11'], ['9'], ['9', '13'], ['9', '13']],
   },
   locrian: {
     seventh: ['m7b5', 'maj7', 'm7', 'm7', 'maj7', '7', 'm7'],
     augmented: ['m7b5', 'maj9', 'm9', '11', 'maj9', '9', 'm9'],
-    extensions: [
-      ['11', 'b13'],
-      ['9'],
-      ['9', '11'],
-      ['11'],
-      ['9', '13'],
-      ['9', '13'],
-      ['9', '11']
-    ]
+    extensions: [['11', 'b13'], ['9'], ['9', '11'], ['11'], ['9', '13'], ['9', '13'], ['9', '11']],
   },
   'harmonic minor': {
     seventh: ['m(maj7)', 'm7b5', 'maj7#5', 'm7', '7', 'maj7', 'dim7'],
@@ -168,8 +128,8 @@ const CHORD_QUALITIES: Record<string, ChordQualitiesByLevel & { extensions?: str
       ['9', '11'],
       ['9', '13'],
       ['9', '#11'],
-      ['13']
-    ]
+      ['13'],
+    ],
   },
   'melodic minor': {
     seventh: ['m(maj7)', 'm7', 'maj7#5', '7', '7', 'm7b5', 'm7b5'],
@@ -181,8 +141,8 @@ const CHORD_QUALITIES: Record<string, ChordQualitiesByLevel & { extensions?: str
       ['9', '13'],
       ['9', '13'],
       ['11'],
-      ['11']
-    ]
+      ['11'],
+    ],
   },
   'pentatonic major': {
     seventh: ['maj7', 'm7', 'm7', 'maj7', '7'],
@@ -192,19 +152,13 @@ const CHORD_QUALITIES: Record<string, ChordQualitiesByLevel & { extensions?: str
       ['9', '11'],
       ['9', '11'],
       ['9', '13'],
-      ['9', '13']
-    ]
+      ['9', '13'],
+    ],
   },
   'pentatonic minor': {
     seventh: ['m7', 'm7', 'maj7', '7', 'm7'],
     augmented: ['m9', 'm9', 'maj9', '9', 'm9'],
-    extensions: [
-      ['9', '11'],
-      ['9', '11'],
-      ['9'],
-      ['9', '13'],
-      ['9', '11']
-    ]
+    extensions: [['9', '11'], ['9', '11'], ['9'], ['9', '13'], ['9', '11']],
   },
   blues: {
     seventh: ['7', '7', '7', '7', '7', '7'],
@@ -215,8 +169,8 @@ const CHORD_QUALITIES: Record<string, ChordQualitiesByLevel & { extensions?: str
       ['9', '13'],
       ['9', '13'],
       ['9', '13'],
-      ['9', '13']
-    ]
+      ['9', '13'],
+    ],
   },
   'whole tone': {
     seventh: ['7', '7', '7', '7', '7', '7'],
@@ -227,16 +181,15 @@ const CHORD_QUALITIES: Record<string, ChordQualitiesByLevel & { extensions?: str
       ['9', '#11', '13'],
       ['9', '#11', '13'],
       ['9', '#11', '13'],
-      ['9', '#11', '13']
-    ]
+      ['9', '#11', '13'],
+    ],
   },
   chromatic: {
     seventh: Array(12).fill('dim7'),
     augmented: Array(12).fill('dim7'),
-    extensions: Array(12).fill(['b9', '11', 'b13'])
-  }
+    extensions: Array(12).fill(['b9', '11', 'b13']),
+  },
 };
-
 
 // Roman numerals for chord analysis
 const ROMAN_NUMERALS: Record<string, string[]> = {
@@ -253,20 +206,7 @@ const ROMAN_NUMERALS: Record<string, string[]> = {
   'pentatonic minor': ['i', 'iii', 'IV', 'v', 'vii'],
   blues: ['I7', 'I7', 'I7', 'I7', 'I7', 'I7'],
   'whole tone': ['I7', 'I7', 'I7', 'I7', 'I7', 'I7'],
-  chromatic: [
-    'i°',
-    'i°',
-    'i°',
-    'i°',
-    'i°',
-    'i°',
-    'i°',
-    'i°',
-    'i°',
-    'i°',
-    'i°',
-    'i°',
-  ],
+  chromatic: ['i°', 'i°', 'i°', 'i°', 'i°', 'i°', 'i°', 'i°', 'i°', 'i°', 'i°', 'i°'],
 };
 
 // Scale characteristics
@@ -274,13 +214,7 @@ const SCALE_CHARACTERISTICS: Record<string, string[]> = {
   'ionian (major)': ['Bright', 'Happy', 'Stable', 'Classical', 'Traditional'],
   dorian: ['Mysterious', 'Jazz', 'Blues', 'Minor with major 6th', 'Modal'],
   phrygian: ['Dark', 'Spanish', 'Flamenco', 'Minor with minor 2nd', 'Exotic'],
-  lydian: [
-    'Dreamy',
-    'Floating',
-    'Major with augmented 4th',
-    'Modern',
-    'Ethereal',
-  ],
+  lydian: ['Dreamy', 'Floating', 'Major with augmented 4th', 'Modern', 'Ethereal'],
   mixolydian: ['Bluesy', 'Rock', 'Country', 'Major with minor 7th', 'Dominant'],
   'aeolian (natural minor)': [
     'Sad',
@@ -289,27 +223,9 @@ const SCALE_CHARACTERISTICS: Record<string, string[]> = {
     'Natural minor',
     'Traditional',
   ],
-  locrian: [
-    'Unstable',
-    'Rare',
-    'Diminished',
-    'Half-diminished',
-    'Experimental',
-  ],
-  'harmonic minor': [
-    'Exotic',
-    'Classical',
-    'Minor with major 7th',
-    'Dramatic',
-    'Romantic',
-  ],
-  'melodic minor': [
-    'Jazz',
-    'Ascending minor',
-    'Major 6th and 7th',
-    'Smooth',
-    'Sophisticated',
-  ],
+  locrian: ['Unstable', 'Rare', 'Diminished', 'Half-diminished', 'Experimental'],
+  'harmonic minor': ['Exotic', 'Classical', 'Minor with major 7th', 'Dramatic', 'Romantic'],
+  'melodic minor': ['Jazz', 'Ascending minor', 'Major 6th and 7th', 'Smooth', 'Sophisticated'],
   'pentatonic major': ['Simple', 'Folk', 'Asian', 'No semitones', 'Universal'],
   'pentatonic minor': ['Blues', 'Rock', 'Simple', 'No semitones', 'Universal'],
   blues: ['Blues', 'Jazz', 'Soul', 'Blue notes', 'Expressive'],
@@ -367,21 +283,11 @@ const RELATED_SCALES: Record<string, string[]> = {
     'aeolian (natural minor)',
     'locrian',
   ],
-  dorian: [
-    'aeolian (natural minor)',
-    'phrygian',
-    'ionian (major)',
-    'mixolydian',
-  ],
+  dorian: ['aeolian (natural minor)', 'phrygian', 'ionian (major)', 'mixolydian'],
   phrygian: ['locrian', 'dorian', 'aeolian (natural minor)'],
   lydian: ['ionian (major)', 'mixolydian'],
   mixolydian: ['dorian', 'ionian (major)', 'lydian'],
-  'aeolian (natural minor)': [
-    'dorian',
-    'phrygian',
-    'harmonic minor',
-    'melodic minor',
-  ],
+  'aeolian (natural minor)': ['dorian', 'phrygian', 'harmonic minor', 'melodic minor'],
   'harmonic minor': ['aeolian (natural minor)', 'melodic minor'],
   'melodic minor': ['aeolian (natural minor)', 'harmonic minor'],
   'pentatonic major': ['pentatonic minor', 'blues'],
@@ -391,31 +297,20 @@ const RELATED_SCALES: Record<string, string[]> = {
 
 // Get note index in chromatic scale
 function getNoteIndex(note: string): number {
-  const chromatic = [
-    'C',
-    'C#',
-    'D',
-    'D#',
-    'E',
-    'F',
-    'F#',
-    'G',
-    'G#',
-    'A',
-    'A#',
-    'B',
-  ];
+  const chromatic = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
   return chromatic.indexOf(note);
 }
 
 // Get note at specific interval from root
 function getNoteAtInterval(root: string, semitones: number, preferFlats = false): string {
   const sharpChromatic = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
-  const flatChromatic  = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'];
+  const flatChromatic = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'];
 
   const chromatic = preferFlats ? flatChromatic : sharpChromatic;
   const rootIndex = sharpChromatic.indexOf(root);
-  if (rootIndex === -1) return root;
+  if (rootIndex === -1) {
+    return root;
+  }
 
   const index = (rootIndex + semitones) % 12;
   return chromatic[index];
@@ -440,12 +335,7 @@ function buildScale(root: string, pattern: number[]): string[] {
 }
 
 // Get chord for scale degree
-export function getChord(
-  root: string,
-  scale: string[],
-  degree: number,
-  quality: string
-): string[] {
+export function getChord(root: string, scale: string[], degree: number, quality: string): string[] {
   // On récupère la note de la gamme au degré donné
   const note = scale[degree];
 
@@ -453,18 +343,18 @@ export function getChord(
   const intervals = getChordIntervals(quality);
 
   // Pour chaque intervalle, calcule la note correspondante à partir de la note root
-  return intervals.map(interval => getNoteAtInterval(note, interval));
+  return intervals.map((interval) => getNoteAtInterval(note, interval));
 }
 
 const EXTENSION_INTERVALS: Record<string, number> = {
   '9': 14,
-  'b9': 13,
+  b9: 13,
   '#9': 15,
   '11': 17,
   '#11': 18,
-  'b11': 16,
+  b11: 16,
   '13': 21,
-  'b13': 20,
+  b13: 20,
   '#13': 22,
 };
 
@@ -528,10 +418,36 @@ function getKeySignature(root: string, scale: string): string {
   // So we only return the root, possibly adjusted if needed.
 
   const supportedKeys = [
-    'C', 'G', 'D', 'A', 'E', 'B', 'F#', 'C#',
-    'F', 'Bb', 'Eb', 'Ab', 'Db', 'Gb', 'Cb',
-    'Am', 'Em', 'Bm', 'F#m', 'C#m', 'G#m', 'D#m', 'A#m',
-    'Dm', 'Gm', 'Cm', 'Fm', 'Bbm', 'Ebm', 'Abm',
+    'C',
+    'G',
+    'D',
+    'A',
+    'E',
+    'B',
+    'F#',
+    'C#',
+    'F',
+    'Bb',
+    'Eb',
+    'Ab',
+    'Db',
+    'Gb',
+    'Cb',
+    'Am',
+    'Em',
+    'Bm',
+    'F#m',
+    'C#m',
+    'G#m',
+    'D#m',
+    'A#m',
+    'Dm',
+    'Gm',
+    'Cm',
+    'Fm',
+    'Bbm',
+    'Ebm',
+    'Abm',
   ];
 
   // Handle minor keys
@@ -545,7 +461,6 @@ function getKeySignature(root: string, scale: string): string {
   // Fallback to C major
   return isMinor ? 'Am' : 'C';
 }
-
 
 // Main function to get scale data
 export function getScaleData(root: string, scaleName: string): ScaleData {
@@ -562,11 +477,9 @@ export function getScaleData(root: string, scaleName: string): ScaleData {
 
     const degreeExtensions = allQualities.extensions?.[index] || [];
     const extensionIntervals = degreeExtensions
-      .map(ext => EXTENSION_INTERVALS[ext])
+      .map((ext) => EXTENSION_INTERVALS[ext])
       .filter((intv): intv is number => intv !== undefined);
-    const extensionNotes = extensionIntervals.map(interval =>
-      getNoteAtInterval(note, interval)
-    );
+    const extensionNotes = extensionIntervals.map((interval) => getNoteAtInterval(note, interval));
 
     return {
       label: `${index + 1}`,
@@ -581,9 +494,7 @@ export function getScaleData(root: string, scaleName: string): ScaleData {
   });
 
   const blueNoteIntervals = BLUE_NOTE_INTERVALS[scaleName] || [];
-  const blueNotes = blueNoteIntervals.map(semitone =>
-    getNoteAtInterval(root, semitone)
-  );
+  const blueNotes = blueNoteIntervals.map((semitone) => getNoteAtInterval(root, semitone));
 
   const chordProgressions = CHORD_PROGRESSIONS[scaleName] || [];
   const characteristics = SCALE_CHARACTERISTICS[scaleName] || [];
@@ -604,7 +515,6 @@ export function getScaleData(root: string, scaleName: string): ScaleData {
   };
 }
 
-
 // Utility function to get all available scales
 export function getAvailableScales(): string[] {
   return Object.keys(SCALE_PATTERNS);
@@ -616,10 +526,7 @@ export function getAvailableNotes(): string[] {
 }
 
 // Utility function to transpose scale
-export function transposeScale(
-  scaleData: ScaleData,
-  semitones: number
-): ScaleData {
+export function transposeScale(scaleData: ScaleData, semitones: number): ScaleData {
   const newRoot = getNoteAtInterval(scaleData.notes[0], semitones);
   const scaleName = scaleData.name.split(' ').slice(1).join(' ');
   return getScaleData(newRoot, scaleName);

@@ -34,30 +34,21 @@ export default function Error({
               />
             </svg>
           </div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">
-            Something went wrong!
-          </h2>
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">Something went wrong!</h2>
           <p className="text-gray-600 mb-6">
             We encountered an unexpected error. Please try again.
           </p>
         </div>
-        
+
         <div className="space-y-3">
-          <Button
-            onClick={reset}
-            className="w-full bg-blue-600 text-white hover:bg-blue-700"
-          >
+          <Button onClick={reset} className="w-full bg-blue-600 text-white hover:bg-blue-700">
             Try again
           </Button>
-          <Button
-            onClick={() => window.location.href = '/'}
-            variant="outline"
-            className="w-full"
-          >
+          <Button onClick={() => (window.location.href = '/')} variant="outline" className="w-full">
             Go home
           </Button>
         </div>
-        
+
         {process.env.NODE_ENV === 'development' && (
           <details className="mt-6 text-left">
             <summary className="cursor-pointer text-sm text-gray-500">

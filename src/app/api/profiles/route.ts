@@ -28,10 +28,7 @@ export async function GET(req: NextRequest) {
         error: error.message,
         userId: session.user.id,
       });
-      return NextResponse.json(
-        { error: 'Failed to fetch profiles' },
-        { status: 500 }
-      );
+      return NextResponse.json({ error: 'Failed to fetch profiles' }, { status: 500 });
     }
     return NextResponse.json(
       { data },
@@ -39,23 +36,17 @@ export async function GET(req: NextRequest) {
         headers: {
           'Cache-Control': 'public, max-age=60, stale-while-revalidate=300',
         },
-      }
+      },
     );
   } catch (error) {
     if (error instanceof AuthenticationError) {
-      return NextResponse.json(
-        { error: error.message },
-        { status: error.statusCode }
-      );
+      return NextResponse.json({ error: error.message }, { status: error.statusCode });
     }
 
     logger.error('Unexpected error in GET /api/profiles', {
       error: error instanceof Error ? error.message : 'Unknown error',
     });
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
 
@@ -93,29 +84,17 @@ export async function POST(req: NextRequest) {
     }
 
     // Create profile using service
-    const profile = await ProfileService.createProfile(
-      session.user.id,
-      session.user.email!
-    );
+    const profile = await ProfileService.createProfile(session.user.id, session.user.email!);
 
     return NextResponse.json({ data: profile }, { status: 201 });
   } catch (error) {
-    if (
-      error instanceof AuthenticationError ||
-      error instanceof ValidationError
-    ) {
-      return NextResponse.json(
-        { error: error.message },
-        { status: error.statusCode }
-      );
+    if (error instanceof AuthenticationError || error instanceof ValidationError) {
+      return NextResponse.json({ error: error.message }, { status: error.statusCode });
     }
 
     logger.error('Unexpected error in POST /api/profiles', {
       error: error instanceof Error ? error.message : 'Unknown error',
     });
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }

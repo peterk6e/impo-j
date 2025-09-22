@@ -14,38 +14,37 @@ const geistMono = Geist_Mono({
   subsets: ['latin'],
 });
 
-
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-<html lang="en">
-  <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-    <QueryProvider>
-      <ThemeProvider>
-      <div className="bg-[var(--background-gradient)] text-[var(--foreground)] font-sans min-h-screen grid grid-rows-[auto_1fr_auto] relative overflow-hidden">
-      {/* Header / Menu */}
-      <header className="flex items-center justify-between px-8 py-6 border-b border-[var(--foreground)]/20 bg-[var(--background-gradient)]/80 backdrop-blur-md relative z-10">
-        <h1 className="text-xl font-bold text-[var(--primary)] tracking-wider uppercase">
-          Hear it
-        </h1>
-        <nav className="flex items-center gap-6">
-          <ThemeToggle />
-        </nav>
-      </header>
-        
-        {children}
+    <html lang="en">
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <QueryProvider>
+          <ThemeProvider>
+            <div className="bg-[var(--background-gradient)] text-[var(--foreground)] font-sans min-h-screen grid grid-rows-[auto_1fr_auto] relative overflow-hidden">
+              {/* Header / Menu */}
+              <header className="flex items-center justify-between px-8 py-6 border-b border-[var(--foreground)]/20 bg-[var(--background-gradient)]/80 backdrop-blur-md relative z-10">
+                <h1 className="text-xl font-bold text-[var(--primary)] tracking-wider uppercase">
+                  Hear it
+                </h1>
+                <nav className="flex items-center gap-6">
+                  <ThemeToggle />
+                </nav>
+              </header>
 
-      {/* Footer */}
-      <footer className="relative z-10 text-center text-sm px-6 py-8 border-t border-[var(--foreground)]/20">
-        <p>&copy; 2025 Hear the Jazz. Cosmic vibes included.</p>
-      </footer>
-      </div>
-      </ThemeProvider>
-    </QueryProvider>
-  </body>
-</html>
+              {children}
+
+              {/* Footer */}
+              <footer className="relative z-10 text-center text-sm px-6 py-8 border-t border-[var(--foreground)]/20">
+                <p>&copy; 2025 Hear the Jazz. Cosmic vibes included.</p>
+              </footer>
+            </div>
+          </ThemeProvider>
+        </QueryProvider>
+      </body>
+    </html>
   );
 }

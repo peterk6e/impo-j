@@ -36,8 +36,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Hear the Jazz',
-    description:
-      'A pocket tool for learning how to listen, improvise, and understand jazz.',
+    description: 'A pocket tool for learning how to listen, improvise, and understand jazz.',
     images: ['/og-image.jpg'],
     creator: '@yourTwitterHandle',
   },
@@ -59,14 +58,12 @@ export default function Home() {
         </h2>
         <p className="mt-6 max-w-2xl mx-auto text-lg leading-relaxed">
           A pocket tool for anyone who wants to step into the world of{' '}
-          <span className="text-[var(--primary)]">jazz improvisation</span>.
-          Whether you’re a{' '}
+          <span className="text-[var(--primary)]">jazz improvisation</span>. Whether you’re a{' '}
           <span className="text-[var(--primary)]">student</span>, a{' '}
-          <span className="text-[var(--secondary)]">curious listener</span>, or
-          a musician deepening your voice, this guide bridges{' '}
-          <span className="text-[var(--primary)]">theory</span> with{' '}
-          <span className="text-[var(--secondary)]">listening</span>. Learn to
-          hear like a jazz musician and improvise with confidence.
+          <span className="text-[var(--secondary)]">curious listener</span>, or a musician deepening
+          your voice, this guide bridges <span className="text-[var(--primary)]">theory</span> with{' '}
+          <span className="text-[var(--secondary)]">listening</span>. Learn to hear like a jazz
+          musician and improvise with confidence.
         </p>
         <Link
           href="/explore"
@@ -79,9 +76,7 @@ export default function Home() {
       {/* Main Content */}
       <main className="relative z-10 px-6 sm:px-16 py-16 max-w-5xl mx-auto space-y-16">
         <section>
-          <h3 className="text-3xl font-semibold text-[var(--primary)] mb-4">
-            Features
-          </h3>
+          <h3 className="text-3xl font-semibold text-[var(--primary)] mb-4">Features</h3>
           <ul className="space-y-3">
             <li>🎼 14 scale types with harmonic analysis</li>
             <li>🎹 Interactive piano visualization</li>
@@ -91,14 +86,10 @@ export default function Home() {
         </section>
 
         <section>
-          <h3 className="text-3xl font-semibold text-[var(--secondary)] mb-4">
-            Supported Scales
-          </h3>
+          <h3 className="text-3xl font-semibold text-[var(--secondary)] mb-4">Supported Scales</h3>
           <div className="grid sm:grid-cols-2 gap-8">
             <div>
-              <h4 className="text-lg font-semibold text-[var(--primary)]">
-                Major Modes
-              </h4>
+              <h4 className="text-lg font-semibold text-[var(--primary)]">Major Modes</h4>
               <ul className="list-disc list-inside">
                 <li>Ionian (Major)</li>
                 <li>Dorian</li>
@@ -110,9 +101,7 @@ export default function Home() {
               </ul>
             </div>
             <div>
-              <h4 className="text-lg font-semibold text-[var(--primary)]">
-                Special Scales
-              </h4>
+              <h4 className="text-lg font-semibold text-[var(--primary)]">Special Scales</h4>
               <ul className="list-disc list-inside">
                 <li>Harmonic Minor</li>
                 <li>Melodic Minor</li>

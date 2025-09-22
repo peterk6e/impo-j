@@ -49,7 +49,9 @@ describe('/api/profiles', () => {
         })),
       };
 
-      vi.mocked(require('@supabase/auth-helpers-nextjs').createRouteHandlerClient).mockReturnValue(mockSupabase);
+      vi.mocked(require('@supabase/auth-helpers-nextjs').createRouteHandlerClient).mockReturnValue(
+        mockSupabase,
+      );
 
       const response = await GET();
       const data = await response.json();
@@ -68,7 +70,9 @@ describe('/api/profiles', () => {
         },
       };
 
-      vi.mocked(require('@supabase/auth-helpers-nextjs').createRouteHandlerClient).mockReturnValue(mockSupabase);
+      vi.mocked(require('@supabase/auth-helpers-nextjs').createRouteHandlerClient).mockReturnValue(
+        mockSupabase,
+      );
 
       const response = await GET();
       const data = await response.json();
@@ -83,7 +87,9 @@ describe('/api/profiles', () => {
       const mockSupabase = {
         auth: {
           getSession: vi.fn().mockResolvedValue({
-            data: { session: { user: { id: 'user-1', email: 'test@example.com' } } },
+            data: {
+              session: { user: { id: 'user-1', email: 'test@example.com' } },
+            },
             error: null,
           }),
         },
@@ -99,7 +105,9 @@ describe('/api/profiles', () => {
         })),
       };
 
-      vi.mocked(require('@supabase/auth-helpers-nextjs').createRouteHandlerClient).mockReturnValue(mockSupabase);
+      vi.mocked(require('@supabase/auth-helpers-nextjs').createRouteHandlerClient).mockReturnValue(
+        mockSupabase,
+      );
 
       const request = new NextRequest('http://localhost:3000/api/profiles', {
         method: 'POST',
