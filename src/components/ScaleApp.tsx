@@ -263,29 +263,29 @@ function PianoKeyboard({ highlightedNotes }: { highlightedNotes: string[] }) {
             {whiteKeys.map((note) => (
               <div
                 key={note}
-                className={`w-12 h-32 border border-gray-300 flex flex-col justify-end items-center p-2 ${
+                className={`w-6 h-16 sm:w-12 sm:h-32 border border-gray-300 flex flex-col justify-end items-center p-1 sm:p-2 ${
                   highlightedNotes.includes(note)
                     ? 'bg-blue-400 text-white'
                     : 'bg-gray-200 hover:bg-gray-50'
                 } transition-colors cursor-pointer`}
               >
-                <div className="text-xs font-medium">{note}</div>
+                <div className="text-[10px] sm:text-xs font-medium">{note}</div>
               </div>
             ))}
           </div>
 
           {/* Black keys */}
-          <div className="absolute top-0 left-0 h-32 w-full pointer-events-none">
+          <div className="absolute top-0 left-0 h-16 sm:h-32 w-full pointer-events-none">
             {Object.entries(blackKeyPositions).map(([note, index]) => (
               <div
                 key={note}
-                className={`absolute z-10 w-8 h-20 ${
+                className={`absolute z-10 w-4 h-10 sm:w-8 sm:h-20 ${
                   highlightedNotes.includes(note)
                     ? 'bg-blue-600 text-white'
                     : 'bg-gray-800 hover:bg-gray-700 text-white'
-                } transition-colors rounded-b text-center text-xs pt-16`}
+                } transition-colors rounded-b text-center text-[8px] sm:text-xs pt-8 sm:pt-16`}
                 style={{
-                  left: `${index * 48 + 36}px`, // 48px = white key width, 36px = center offset
+                  left: `${index * 24 + 18}px`, // moitié de 48px et 36px
                   pointerEvents: 'auto',
                 }}
               >
@@ -358,8 +358,12 @@ export function StaffNotation({ scaleData }: { scaleData: ScaleData }) {
       <div className="flex justify-center">
         <div
           ref={containerRef}
-          className="border rounded-lg p-4 bg-gray-50 opacity-90 items-center justify-center flex"
-          style={{ width: 550, height: 150 }}
+          className="
+        border rounded-lg p-2 sm:p-4 
+        bg-gray-50 opacity-90 
+        flex items-center justify-center
+        w-[280px] h-[100px] sm:w-[400px] sm:h-[120px] md:w-[550px] md:h-[150px]
+      "
         />
       </div>
     </div>
