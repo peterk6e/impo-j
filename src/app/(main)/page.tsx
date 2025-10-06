@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 
-// ✅ SEO + Open Graph metadata
 export const metadata: Metadata = {
   title: 'Hear the Jazz: A Pocket Tool for Listening and Improvisation',
   description:

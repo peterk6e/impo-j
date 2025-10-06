@@ -253,6 +253,26 @@ function PianoKeyboard({ highlightedNotes }: { highlightedNotes: string[] }) {
     'A#': 5,
   };
 
+  const [isMobile, setIsMobile] = useState(true);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // set offsets depending on screen size
+  const getLeft = (index: number) => {
+    if (isMobile) {
+      // mobile: white key width 24px, black key offset ~18px
+      return index * 24 + 18;
+    } else {
+      // desktop: white key width 48px, black key offset ~36px
+      return index * 48 + 36;
+    }
+  };
+
   return (
     <div className="mt-6">
       <h3 className="text-lg font-semibold mb-3">Piano Keyboard</h3>
@@ -269,7 +289,7 @@ function PianoKeyboard({ highlightedNotes }: { highlightedNotes: string[] }) {
                     : 'bg-gray-200 hover:bg-gray-50'
                 } transition-colors cursor-pointer`}
               >
-                <div className="text-[10px] sm:text-xs font-medium">{note}</div>
+                <div className="text-[10px] sm:text-xs font-medium text-gray-500">{note}</div>
               </div>
             ))}
           </div>
@@ -279,13 +299,13 @@ function PianoKeyboard({ highlightedNotes }: { highlightedNotes: string[] }) {
             {Object.entries(blackKeyPositions).map(([note, index]) => (
               <div
                 key={note}
-                className={`absolute z-10 w-4 h-10 sm:w-8 sm:h-20 ${
+                className={`absolute w-4 h-10 sm:w-8 sm:h-20 ${
                   highlightedNotes.includes(note)
                     ? 'bg-blue-600 text-white'
                     : 'bg-gray-800 hover:bg-gray-700 text-white'
                 } transition-colors rounded-b text-center text-[8px] sm:text-xs pt-8 sm:pt-16`}
                 style={{
-                  left: `${index * 24 + 18}px`, // moitié de 48px et 36px
+                  left: `${getLeft(index)}px`,
                   pointerEvents: 'auto',
                 }}
               >
